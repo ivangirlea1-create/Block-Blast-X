@@ -1,6 +1,6 @@
 // ==========================================
 // BLOCK BLAST X
-// НАСТОЯЩЕЕ TOUCH / DRAG УПРАВЛЕНИЕ
+// Полное управление пальцем
 // ==========================================
 
 const SIZE = 8;
@@ -15,6 +15,7 @@ const colors = [
 ];
 
 const shapes = [
+
   [[1]],
 
   [[1,1]],
@@ -31,23 +32,34 @@ const shapes = [
 
   [[1,1],[1,1]],
 
-  [[1,1,1],[0,1,0]],
+  [[1,1,1],
+   [0,1,0]],
 
-  [[1,1,0],[0,1,1]],
+  [[1,1,0],
+   [0,1,1]],
 
-  [[0,1,1],[1,1,0]],
+  [[0,1,1],
+   [1,1,0]],
 
-  [[1,0],[1,1]],
+  [[1,0],
+   [1,1]],
 
-  [[0,1],[1,1]],
+  [[0,1],
+   [1,1]],
 
-  [[1,1,1],[1,0,0]],
+  [[1,1,1],
+   [1,0,0]],
 
-  [[1,1,1],[0,0,1]],
+  [[1,1,1],
+   [0,0,1]],
 
-  [[1,0,0],[1,1,1]],
+  [[1,0,0],
+   [1,1,1]],
 
-  [[1,1,1],[0,1,0],[0,1,0]]
+  [[1,1,1],
+   [0,1,0],
+   [0,1,0]]
+
 ];
 
 
@@ -55,50 +67,68 @@ const shapes = [
 // SAVE
 // ==========================================
 
-let saved = JSON.parse(
-  localStorage.getItem("BlockBlastXSave") || "{}"
-);
+let saved =
+  JSON.parse(
+    localStorage.getItem(
+      "BlockBlastXSave"
+    ) || "{}"
+  );
 
-let coins = saved.coins || 0;
-let best = saved.best || 0;
+let coins =
+  saved.coins || 0;
+
+let best =
+  saved.best || 0;
 
 let powers = {
-  bomb: saved.bomb || 0,
-  line: saved.line || 0,
-  undo: saved.undo || 0
+
+  bomb:
+    saved.bomb || 0,
+
+  line:
+    saved.line || 0,
+
+  undo:
+    saved.undo || 0
+
 };
 
 
 // ==========================================
-// GAME DATA
+// GAME VARIABLES
 // ==========================================
 
 let board = [];
+
 let pieces = [];
 
 let score = 0;
+
 let combo = 0;
 
 let selected = null;
 
 let dragging = false;
+
 let dragElement = null;
 
 let dragPieceIndex = null;
 
 let previewX = -1;
+
 let previewY = -1;
 
 let lastBoard = null;
 
 let gameActive = false;
+
 let paused = false;
 
 let powerMode = null;
 
 
 // ==========================================
-// DOM
+// ELEMENTS
 // ==========================================
 
 const menu =
@@ -131,12 +161,19 @@ function saveGame() {
 
   localStorage.setItem(
     "BlockBlastXSave",
+
     JSON.stringify({
+
       coins: coins,
+
       best: best,
+
       bomb: powers.bomb,
+
       line: powers.line,
+
       undo: powers.undo
+
     })
   );
 
@@ -164,11 +201,25 @@ function showMenu() {
 
   gameActive = false;
 
-  menu.classList.remove("hidden");
-  game.classList.add("hidden");
-  shop.classList.add("hidden");
-  gameOver.classList.add("hidden");
-  pause.classList.add("hidden");
+  menu.classList.remove(
+    "hidden"
+  );
+
+  game.classList.add(
+    "hidden"
+  );
+
+  shop.classList.add(
+    "hidden"
+  );
+
+  gameOver.classList.add(
+    "hidden"
+  );
+
+  pause.classList.add(
+    "hidden"
+  );
 
   updateMenu();
 
@@ -176,7 +227,7 @@ function showMenu() {
 
 
 // ==========================================
-// START
+// START GAME
 // ==========================================
 
 document.getElementById(
@@ -186,14 +237,28 @@ document.getElementById(
 
 function startGame() {
 
-  menu.classList.add("hidden");
-  shop.classList.add("hidden");
-  gameOver.classList.add("hidden");
-  pause.classList.add("hidden");
+  menu.classList.add(
+    "hidden"
+  );
 
-  game.classList.remove("hidden");
+  shop.classList.add(
+    "hidden"
+  );
+
+  gameOver.classList.add(
+    "hidden"
+  );
+
+  pause.classList.add(
+    "hidden"
+  );
+
+  game.classList.remove(
+    "hidden"
+  );
 
   score = 0;
+
   combo = 0;
 
   selected = null;
@@ -205,6 +270,8 @@ function startGame() {
   gameActive = true;
 
   paused = false;
+
+  lastBoard = null;
 
   createBoard();
 
@@ -223,11 +290,19 @@ function createBoard() {
 
   board = [];
 
-  for (let y = 0; y < SIZE; y++) {
+  for (
+    let y = 0;
+    y < SIZE;
+    y++
+  ) {
 
     board[y] = [];
 
-    for (let x = 0; x < SIZE; x++) {
+    for (
+      let x = 0;
+      x < SIZE;
+      x++
+    ) {
 
       board[y][x] = null;
 
@@ -248,28 +323,48 @@ function renderBoard() {
 
   boardElement.innerHTML = "";
 
-  for (let y = 0; y < SIZE; y++) {
+  for (
+    let y = 0;
+    y < SIZE;
+    y++
+  ) {
 
-    for (let x = 0; x < SIZE; x++) {
+    for (
+      let x = 0;
+      x < SIZE;
+      x++
+    ) {
 
       const cell =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
-      cell.className = "cell";
+      cell.className =
+        "cell";
 
       cell.dataset.x = x;
+
       cell.dataset.y = y;
 
-      if (board[y][x] !== null) {
+      if (
+        board[y][x] !== null
+      ) {
 
-        cell.classList.add("filled");
+        cell.classList.add(
+          "filled"
+        );
 
         cell.style.background =
-          colors[board[y][x]];
+          colors[
+            board[y][x]
+          ];
 
       }
 
-      boardElement.appendChild(cell);
+      boardElement.appendChild(
+        cell
+      );
 
     }
 
@@ -281,27 +376,35 @@ function renderBoard() {
 
 
 // ==========================================
-// PIECES
+// CREATE PIECES
 // ==========================================
 
 function createPieces() {
 
   pieces = [];
 
-  for (let i = 0; i < 3; i++) {
+  for (
+    let i = 0;
+    i < 3;
+    i++
+  ) {
 
     pieces.push({
+
       shape:
         shapes[
           Math.floor(
-            Math.random() * shapes.length
+            Math.random() *
+            shapes.length
           )
         ],
 
       color:
         Math.floor(
-          Math.random() * colors.length
+          Math.random() *
+          colors.length
         )
+
     });
 
   }
@@ -323,58 +426,78 @@ function renderPieces() {
     (piece, index) => {
 
       const element =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
-      element.className = "piece";
+      element.className =
+        "piece";
 
-      element.dataset.index = index;
+      element.dataset.index =
+        index;
 
       const mini =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
-      mini.className = "mini";
+      mini.className =
+        "mini";
 
       mini.style.gridTemplateColumns =
-        `repeat(${piece.shape[0].length},17px)`;
+        `repeat(
+          ${piece.shape[0].length},
+          17px
+        )`;
 
 
-      piece.shape.forEach(row => {
+      piece.shape.forEach(
+        row => {
 
-        row.forEach(block => {
+          row.forEach(
+            block => {
 
-          const b =
-            document.createElement("div");
+              const b =
+                document.createElement(
+                  "div"
+                );
 
-          b.className = "miniBlock";
+              b.className =
+                "miniBlock";
 
-          if (block) {
+              if (block) {
 
-            b.style.background =
-              colors[piece.color];
+                b.style.background =
+                  colors[
+                    piece.color
+                  ];
 
-          } else {
+              } else {
 
-            b.style.visibility =
-              "hidden";
+                b.style.visibility =
+                  "hidden";
 
-          }
+              }
 
-          mini.appendChild(b);
+              mini.appendChild(b);
 
-        });
+            }
+          );
 
-      });
+        }
+      );
 
 
       element.appendChild(mini);
 
-      // TOUCH
       element.addEventListener(
         "pointerdown",
         startDrag
       );
 
-      piecesElement.appendChild(element);
+      piecesElement.appendChild(
+        element
+      );
 
     }
   );
@@ -388,11 +511,11 @@ function renderPieces() {
 
 function startDrag(event) {
 
-  if (!gameActive || paused) {
-    return;
-  }
-
-  if (powerMode) {
+  if (
+    !gameActive ||
+    paused ||
+    powerMode
+  ) {
     return;
   }
 
@@ -400,24 +523,33 @@ function startDrag(event) {
     event.currentTarget;
 
   dragPieceIndex =
-    Number(element.dataset.index);
+    Number(
+      element.dataset.index
+    );
 
   const piece =
-    pieces[dragPieceIndex];
+    pieces[
+      dragPieceIndex
+    ];
 
   if (!piece) return;
 
   dragging = true;
 
-  selected = dragPieceIndex;
+  selected =
+    dragPieceIndex;
 
   element.setPointerCapture(
     event.pointerId
   );
 
-  element.classList.add("selected");
+  element.classList.add(
+    "selected"
+  );
 
-  createDragPiece(piece);
+  createDragPiece(
+    piece
+  );
 
   moveDrag(event);
 
@@ -427,24 +559,33 @@ function startDrag(event) {
 
 
 // ==========================================
-// CREATE DRAG PIECE
+// DRAG VISUAL
 // ==========================================
 
-function createDragPiece(piece) {
+function createDragPiece(
+  piece
+) {
 
   removeDragPiece();
 
   dragElement =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   dragElement.className =
     "dragPiece";
 
+  const blockSize = 30;
+
+  const gap = 3;
+
   const width =
     piece.shape[0].length;
 
-  const blockSize = 30;
-  const gap = 3;
+  const height =
+    piece.shape.length;
+
 
   dragElement.style.width =
     (
@@ -452,12 +593,11 @@ function createDragPiece(piece) {
       (width - 1) * gap
     ) + "px";
 
+
   dragElement.style.height =
     (
-      piece.shape.length *
-      blockSize +
-      (piece.shape.length - 1) *
-      gap
+      height * blockSize +
+      (height - 1) * gap
     ) + "px";
 
 
@@ -470,21 +610,31 @@ function createDragPiece(piece) {
           if (!block) return;
 
           const b =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
 
           b.className =
             "dragBlock";
 
           b.style.background =
-            colors[piece.color];
+            colors[
+              piece.color
+            ];
 
           b.style.left =
-            x * (blockSize + gap) + "px";
+            x *
+            (blockSize + gap)
+            + "px";
 
           b.style.top =
-            y * (blockSize + gap) + "px";
+            y *
+            (blockSize + gap)
+            + "px";
 
-          dragElement.appendChild(b);
+          dragElement.appendChild(
+            b
+          );
 
         }
       );
@@ -505,17 +655,24 @@ function createDragPiece(piece) {
 
 function moveDrag(event) {
 
-  if (!dragging || !dragElement) {
+  if (
+    !dragging ||
+    !dragElement
+  ) {
     return;
   }
 
-  const x = event.clientX;
-  const y = event.clientY;
+
+  const x =
+    event.clientX;
+
+  const y =
+    event.clientY;
+
 
   dragElement.style.left =
     x + "px";
 
-  // Поднимаем фигуру над пальцем
   dragElement.style.top =
     (y - 70) + "px";
 
@@ -530,9 +687,10 @@ function moveDrag(event) {
   if (!cell) {
 
     previewX = -1;
+
     previewY = -1;
 
-    showPreview();
+    clearPreview();
 
     return;
 
@@ -540,7 +698,12 @@ function moveDrag(event) {
 
 
   const piece =
-    pieces[dragPieceIndex];
+    pieces[
+      dragPieceIndex
+    ];
+
+  if (!piece) return;
+
 
   const width =
     piece.shape[0].length;
@@ -549,14 +712,48 @@ function moveDrag(event) {
     piece.shape.length;
 
 
-  previewX =
+  // Центр фигуры под пальцем
+  let px =
     cell.x -
-    Math.floor(width / 2);
+    Math.floor(
+      width / 2
+    );
 
-  previewY =
+  let py =
     cell.y -
-    Math.floor(height / 2);
+    Math.floor(
+      height / 2
+    );
 
+
+  // ======================================
+  // ⭐ ГЛАВНОЕ ИСПРАВЛЕНИЕ
+  // Прижимаем фигуру к краям
+  // ======================================
+
+  px =
+    Math.max(
+      0,
+      Math.min(
+        px,
+        SIZE - width
+      )
+    );
+
+
+  py =
+    Math.max(
+      0,
+      Math.min(
+        py,
+        SIZE - height
+      )
+    );
+
+
+  previewX = px;
+
+  previewY = py;
 
   showPreview();
 
@@ -569,6 +766,7 @@ function moveDrag(event) {
 
 document.addEventListener(
   "pointermove",
+
   function(event) {
 
     if (!dragging) return;
@@ -578,7 +776,10 @@ document.addEventListener(
     event.preventDefault();
 
   },
-  { passive: false }
+
+  {
+    passive: false
+  }
 );
 
 
@@ -588,6 +789,7 @@ document.addEventListener(
 
 document.addEventListener(
   "pointerup",
+
   function() {
 
     if (!dragging) return;
@@ -608,6 +810,7 @@ function finishDrag() {
 
   removeDragPiece();
 
+
   if (
     dragPieceIndex === null
   ) {
@@ -619,27 +822,16 @@ function finishDrag() {
   }
 
 
-  if (
-    previewX < 0 ||
-    previewY < 0
-  ) {
-
-    selected = null;
-    dragPieceIndex = null;
-
-    renderPieces();
-    clearPreview();
-
-    return;
-
-  }
-
-
   const piece =
-    pieces[dragPieceIndex];
+    pieces[
+      dragPieceIndex
+    ];
 
 
   if (
+    piece &&
+    previewX >= 0 &&
+    previewY >= 0 &&
     canPlace(
       piece,
       previewX,
@@ -655,13 +847,17 @@ function finishDrag() {
 
   } else {
 
-    // Красная подсветка
-    showInvalid();
+    clearPreview();
+
+    renderBoard();
+
+    renderPieces();
 
   }
 
 
   selected = null;
+
   dragPieceIndex = null;
 
   clearPreview();
@@ -670,7 +866,7 @@ function finishDrag() {
 
 
 // ==========================================
-// SCREEN -> CELL
+// SCREEN TO CELL
 // ==========================================
 
 function getCellFromScreen(
@@ -680,6 +876,7 @@ function getCellFromScreen(
 
   const rect =
     boardElement.getBoundingClientRect();
+
 
   if (
     screenX < rect.left ||
@@ -702,13 +899,20 @@ function getCellFromScreen(
 
   const x =
     Math.floor(
-      (screenX - rect.left) /
+      (
+        screenX -
+        rect.left
+      ) /
       cellWidth
     );
 
+
   const y =
     Math.floor(
-      (screenY - rect.top) /
+      (
+        screenY -
+        rect.top
+      ) /
       cellHeight
     );
 
@@ -734,22 +938,35 @@ function getCellFromScreen(
 
 
 // ==========================================
-// PREVIEW
+// SHOW PREVIEW
 // ==========================================
 
 function showPreview() {
 
-  document.querySelectorAll(
-    ".cell.preview"
-  ).forEach(
-    c => c.classList.remove("preview")
-  );
+  // ⭐ Всегда сначала убираем старый цвет
+
+  document
+    .querySelectorAll(".cell")
+    .forEach(
+      cell => {
+
+        cell.classList.remove(
+          "preview"
+        );
+
+        cell.classList.remove(
+          "invalid"
+        );
+
+      }
+    );
 
 
   if (
     !dragging ||
     dragPieceIndex === null ||
-    previewX < 0
+    previewX < 0 ||
+    previewY < 0
   ) {
 
     return;
@@ -758,7 +975,9 @@ function showPreview() {
 
 
   const piece =
-    pieces[dragPieceIndex];
+    pieces[
+      dragPieceIndex
+    ];
 
   if (!piece) return;
 
@@ -783,7 +1002,9 @@ function showPreview() {
       px++
     ) {
 
-      if (!piece.shape[py][px]) {
+      if (
+        !piece.shape[py][px]
+      ) {
         continue;
       }
 
@@ -806,15 +1027,25 @@ function showPreview() {
           y * SIZE + x;
 
         const cell =
-          boardElement.children[index];
+          boardElement
+            .children[index];
+
 
         if (cell) {
 
-          cell.classList.add(
-            possible
-              ? "preview"
-              : "invalid"
-          );
+          if (possible) {
+
+            cell.classList.add(
+              "preview"
+            );
+
+          } else {
+
+            cell.classList.add(
+              "invalid"
+            );
+
+          }
 
         }
 
@@ -833,54 +1064,25 @@ function showPreview() {
 
 function clearPreview() {
 
-  document.querySelectorAll(
-    ".cell.preview,.cell.invalid"
-  ).forEach(
-    cell => {
+  document
+    .querySelectorAll(".cell")
+    .forEach(
+      cell => {
 
-      cell.classList.remove(
-        "preview",
-        "invalid"
-      );
+        cell.classList.remove(
+          "preview"
+        );
 
-    }
-  );
+        cell.classList.remove(
+          "invalid"
+        );
+
+      }
+    );
 
   previewX = -1;
+
   previewY = -1;
-
-}
-
-
-// ==========================================
-// INVALID
-// ==========================================
-
-function showInvalid() {
-
-  document.querySelectorAll(
-    ".cell.invalid"
-  ).forEach(
-    cell => {
-
-      cell.classList.remove(
-        "invalid"
-      );
-
-    }
-  );
-
-  boardElement.animate(
-    [
-      { transform: "translateX(0)" },
-      { transform: "translateX(-6px)" },
-      { transform: "translateX(6px)" },
-      { transform: "translateX(0)" }
-    ],
-    {
-      duration: 180
-    }
-  );
 
 }
 
@@ -924,7 +1126,9 @@ function canPlace(
       x++
     ) {
 
-      if (!piece.shape[y][x]) {
+      if (
+        !piece.shape[y][x]
+      ) {
         continue;
       }
 
@@ -981,8 +1185,7 @@ function putPiece(
   if (!piece) return;
 
 
-  // SAVE FOR UNDO
-
+  // Сохраняем состояние
   lastBoard =
     board.map(
       row => [...row]
@@ -1022,6 +1225,8 @@ function putPiece(
   );
 
 
+  clearPreview();
+
   renderBoard();
 
   checkLines();
@@ -1042,6 +1247,7 @@ function putPiece(
 
   updateHUD();
 
+
   setTimeout(
     checkGameOver,
     100
@@ -1051,12 +1257,13 @@ function putPiece(
 
 
 // ==========================================
-// LINES
+// CHECK LINES
 // ==========================================
 
 function checkLines() {
 
   const rows = [];
+
   const cols = [];
 
 
@@ -1068,7 +1275,8 @@ function checkLines() {
 
     if (
       board[y].every(
-        cell => cell !== null
+        cell =>
+          cell !== null
       )
     ) {
 
@@ -1087,6 +1295,7 @@ function checkLines() {
 
     let full = true;
 
+
     for (
       let y = 0;
       y < SIZE;
@@ -1098,14 +1307,18 @@ function checkLines() {
       ) {
 
         full = false;
+
         break;
 
       }
 
     }
 
+
     if (full) {
+
       cols.push(x);
+
     }
 
   }
@@ -1119,6 +1332,7 @@ function checkLines() {
   if (count === 0) {
 
     combo = 0;
+
     updateCombo();
 
     return;
@@ -1192,7 +1406,9 @@ function checkLines() {
 function updateCombo() {
 
   const element =
-    document.getElementById("combo");
+    document.getElementById(
+      "combo"
+    );
 
 
   document.getElementById(
@@ -1276,19 +1492,27 @@ function endGame() {
 
   gameActive = false;
 
-  if (score > best) {
+
+  if (
+    score > best
+  ) {
+
     best = score;
+
   }
 
 
   const earned =
     Math.max(
       10,
-      Math.floor(score / 100)
+      Math.floor(
+        score / 100
+      )
     );
 
 
   coins += earned;
+
 
   saveGame();
 
@@ -1296,6 +1520,7 @@ function endGame() {
   document.getElementById(
     "finalScore"
   ).textContent = score;
+
 
   document.getElementById(
     "earnedCoins"
@@ -1333,15 +1558,18 @@ function updateHUD() {
 
   document.getElementById(
     "bombCount"
-  ).textContent = powers.bomb;
+  ).textContent =
+    powers.bomb;
 
   document.getElementById(
     "lineCount"
-  ).textContent = powers.line;
+  ).textContent =
+    powers.line;
 
   document.getElementById(
     "undoCount"
-  ).textContent = powers.undo;
+  ).textContent =
+    powers.undo;
 
 }
 
@@ -1381,19 +1609,19 @@ document.getElementById(
 document.getElementById(
   "pauseMenuBtn"
 ).onclick =
-showMenu;
+  showMenu;
 
 
 document.getElementById(
   "retryBtn"
 ).onclick =
-startGame;
+  startGame;
 
 
 document.getElementById(
   "overMenuBtn"
 ).onclick =
-showMenu;
+  showMenu;
 
 
 // ==========================================
@@ -1420,7 +1648,7 @@ document.getElementById(
 document.getElementById(
   "backBtn"
 ).onclick =
-showMenu;
+  showMenu;
 
 
 function updateShop() {
@@ -1433,58 +1661,67 @@ function updateShop() {
 
 
 const prices = {
+
   bomb: 100,
+
   line: 150,
+
   undo: 200
+
 };
 
 
-document.querySelectorAll(
-  ".buy"
-).forEach(
-  button => {
+document
+  .querySelectorAll(".buy")
+  .forEach(
+    button => {
 
-    button.onclick = function() {
+      button.onclick =
+        function() {
 
-      const item =
-        button.dataset.item;
+          const item =
+            button.dataset.item;
 
-      const price =
-        prices[item];
+          const price =
+            prices[item];
 
 
-      if (coins < price) {
+          if (
+            coins < price
+          ) {
 
-        button.textContent =
-          "❌ НЕТ МОНЕТ";
-
-        setTimeout(
-          () => {
             button.textContent =
-              "🪙 " + price;
-          },
-          900
-        );
+              "❌ НЕТ МОНЕТ";
 
-        return;
+            setTimeout(
+              () => {
 
-      }
+                button.textContent =
+                  "🪙 " + price;
+
+              },
+              900
+            );
+
+            return;
+
+          }
 
 
-      coins -= price;
+          coins -= price;
 
-      powers[item]++;
+          powers[item]++;
 
-      saveGame();
+          saveGame();
 
-      updateShop();
+          updateShop();
 
-      updateHUD();
+          updateHUD();
 
-    };
+        };
 
-  }
-);
+    }
+  );
 
 
 // ==========================================
@@ -1495,7 +1732,9 @@ document.getElementById(
   "bombBtn"
 ).onclick = function() {
 
-  if (powers.bomb <= 0) {
+  if (
+    powers.bomb <= 0
+  ) {
 
     alert(
       "💣 У тебя нет бомб. Купи их в магазине!"
@@ -1522,7 +1761,9 @@ document.getElementById(
   "lineBtn"
 ).onclick = function() {
 
-  if (powers.line <= 0) {
+  if (
+    powers.line <= 0
+  ) {
 
     alert(
       "⚡ У тебя нет молний. Купи их в магазине!"
@@ -1542,28 +1783,40 @@ document.getElementById(
 
 
 // ==========================================
-// POWER CELL CLICK
+// POWER CLICK
 // ==========================================
 
 boardElement.addEventListener(
   "click",
+
   function(event) {
 
     if (!powerMode) return;
 
+
     const cell =
-      event.target.closest(".cell");
+      event.target.closest(
+        ".cell"
+      );
+
 
     if (!cell) return;
 
+
     const x =
-      Number(cell.dataset.x);
+      Number(
+        cell.dataset.x
+      );
 
     const y =
-      Number(cell.dataset.y);
+      Number(
+        cell.dataset.y
+      );
 
 
-    if (powerMode === "bomb") {
+    if (
+      powerMode === "bomb"
+    ) {
 
       for (
         let dy = -1;
@@ -1577,8 +1830,12 @@ boardElement.addEventListener(
           dx++
         ) {
 
-          const bx = x + dx;
-          const by = y + dy;
+          const bx =
+            x + dx;
+
+          const by =
+            y + dy;
+
 
           if (
             bx >= 0 &&
@@ -1587,13 +1844,15 @@ boardElement.addEventListener(
             by < SIZE
           ) {
 
-            board[by][bx] = null;
+            board[by][bx] =
+              null;
 
           }
 
         }
 
       }
+
 
       powers.bomb--;
 
@@ -1602,7 +1861,9 @@ boardElement.addEventListener(
     }
 
 
-    if (powerMode === "line") {
+    if (
+      powerMode === "line"
+    ) {
 
       for (
         let i = 0;
@@ -1610,9 +1871,11 @@ boardElement.addEventListener(
         i++
       ) {
 
-        board[y][i] = null;
+        board[y][i] =
+          null;
 
       }
+
 
       powers.line--;
 
@@ -1650,7 +1913,9 @@ document.getElementById(
   }
 
 
-  if (powers.undo <= 0) {
+  if (
+    powers.undo <= 0
+  ) {
 
     alert(
       "↩️ У тебя нет отмен. Купи её в магазине!"
@@ -1681,7 +1946,7 @@ document.getElementById(
 
 
 // ==========================================
-// INIT
+// START
 // ==========================================
 
 updateMenu();
