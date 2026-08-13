@@ -3,246 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-  <title>BLOCK BLAST X</title>
-
+  <title>Block Blast X</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- МЕНЮ -->
-  <div id="menu" class="screen">
+<div id="menu" class="screen">
+  <div class="logo">BLOCK<br><span>BLAST</span> <b>X</b></div>
+  <p>ПЕРЕТАСКИВАЙ • СОБИРАЙ • УНИЧТОЖАЙ</p>
 
-    <div class="logo">
-      🧱
-      <span>BLOCK</span>
-      BLAST
-      <b>X</b>
+  <button id="playBtn">▶ ИГРАТЬ</button>
+  <button id="shopBtn" class="dark">🛒 МАГАЗИН</button>
+
+  <div class="stats">
+    🪙 <span id="menuCoins">0</span>
+    &nbsp;&nbsp;&nbsp;
+    🏆 <span id="menuBest">0</span>
+  </div>
+</div>
+
+
+<div id="game" class="hidden">
+
+  <header>
+    <button id="pauseBtn">⏸</button>
+
+    <div>
+      <small>СЧЁТ</small>
+      <strong id="score">0</strong>
     </div>
 
-    <p class="subtitle">
-      СОБЕРИ ЛИНИЮ • УНИЧТОЖЬ БЛОКИ
-    </p>
-
-    <button id="playBtn" class="bigBtn">
-      ▶ ИГРАТЬ
-    </button>
-
-    <button id="shopMenuBtn" class="bigBtn darkBtn">
-      🛒 МАГАЗИН
-    </button>
-
-    <div class="menuStats">
-      <div>
-        🪙 <span id="menuCoins">0</span>
-      </div>
-
-      <div>
-        🏆 <span id="menuBest">0</span>
-      </div>
+    <div>
+      <small>РЕКОРД</small>
+      <strong id="best">0</strong>
     </div>
 
+    <div>
+      🪙
+      <strong id="coins">0</strong>
+    </div>
+  </header>
+
+  <div id="combo">
+    COMBO ×<span id="comboNumber">0</span>
   </div>
 
+  <div id="board"></div>
 
-  <!-- ИГРА -->
-  <div id="game" class="hidden">
-
-    <header class="top">
-
-      <button id="pauseBtn">
-        ⏸️
-      </button>
-
-      <div class="stat">
-        SCORE
-        <strong id="score">0</strong>
-      </div>
-
-      <div class="stat">
-        BEST
-        <strong id="best">0</strong>
-      </div>
-
-      <div class="stat">
-        🪙
-        <strong id="coins">0</strong>
-      </div>
-
-    </header>
-
-
-    <!-- КОМБО -->
-    <div id="combo">
-      COMBO x<span id="comboNumber">0</span>
-    </div>
-
-
-    <!-- ПОЛЕ -->
-    <main>
-
-      <div id="board"></div>
-
-    </main>
-
-
-    <!-- ФИГУРЫ -->
-    <section class="piecesTitle">
-      ВЫБЕРИ ФИГУРУ
-    </section>
-
-    <div id="pieces"></div>
-
-
-    <!-- СПОСОБНОСТИ -->
-    <div class="powers">
-
-      <button id="bombBtn">
-        💣
-        <span>БОМБА</span>
-        <b id="bombCount">0</b>
-      </button>
-
-      <button id="lineBtn">
-        ⚡
-        <span>МОЛНИЯ</span>
-        <b id="lineCount">0</b>
-      </button>
-
-      <button id="undoBtn">
-        ↩️
-        <span>ОТМЕНА</span>
-        <b id="undoCount">0</b>
-      </button>
-
-    </div>
-
+  <div class="hint">
+    👆 Зажми фигуру и перетащи её на поле
   </div>
 
+  <div id="pieces"></div>
 
-  <!-- МАГАЗИН -->
-  <div id="shop" class="screen hidden">
+  <div class="powers">
 
-    <button id="backMenuBtn" class="backBtn">
-      ← НАЗАД
+    <button id="bombBtn">
+      💣
+      <span>БОМБА</span>
+      <b id="bombCount">0</b>
     </button>
 
-    <h1>🛒 МАГАЗИН</h1>
-
-    <div class="shopCoins">
-      🪙 <span id="shopCoins">0</span>
-    </div>
-
-
-    <div class="shopGrid">
-
-      <div class="shopCard">
-
-        <div class="shopIcon">💣</div>
-
-        <h2>БОМБА</h2>
-
-        <p>
-          Уничтожает блоки вокруг выбранной клетки.
-        </p>
-
-        <button class="buyBtn" data-item="bomb">
-          🪙 100
-        </button>
-
-      </div>
-
-
-      <div class="shopCard">
-
-        <div class="shopIcon">⚡</div>
-
-        <h2>МОЛНИЯ</h2>
-
-        <p>
-          Очищает целую линию.
-        </p>
-
-        <button class="buyBtn" data-item="line">
-          🪙 150
-        </button>
-
-      </div>
-
-
-      <div class="shopCard">
-
-        <div class="shopIcon">↩️</div>
-
-        <h2>ОТМЕНА</h2>
-
-        <p>
-          Возвращает последний ход.
-        </p>
-
-        <button class="buyBtn" data-item="undo">
-          🪙 200
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- GAME OVER -->
-  <div id="gameOver" class="screen hidden">
-
-    <div class="gameOverIcon">
-      💀
-    </div>
-
-    <h1>ИГРА ОКОНЧЕНА</h1>
-
-    <div class="finalScore">
-      <span>СЧЁТ</span>
-      <strong id="finalScore">0</strong>
-    </div>
-
-    <div class="earned">
-      🪙 +<span id="earnedCoins">0</span>
-    </div>
-
-    <button id="retryBtn" class="bigBtn">
-      🔄 ЕЩЁ РАЗ
+    <button id="lineBtn">
+      ⚡
+      <span>ЛИНИЯ</span>
+      <b id="lineCount">0</b>
     </button>
 
-    <button id="gameOverMenuBtn" class="bigBtn darkBtn">
-      🏠 МЕНЮ
+    <button id="undoBtn">
+      ↩️
+      <span>ОТМЕНА</span>
+      <b id="undoCount">0</b>
     </button>
 
   </div>
 
+</div>
 
-  <!-- ПАУЗА -->
-  <div id="pauseScreen" class="overlay hidden">
 
-    <div class="pauseBox">
+<div id="shop" class="screen hidden">
 
-      <h1>⏸️ ПАУЗА</h1>
+  <button id="backBtn" class="back">← НАЗАД</button>
 
-      <button id="resumeBtn" class="bigBtn">
-        ▶ ПРОДОЛЖИТЬ
-      </button>
+  <h1>🛒 МАГАЗИН</h1>
 
-      <button id="pauseMenuBtn" class="bigBtn darkBtn">
-        🏠 МЕНЮ
-      </button>
+  <div class="shopCoins">
+    🪙 <span id="shopCoins">0</span>
+  </div>
 
+  <div class="shopGrid">
+
+    <div class="card">
+      <div>💣</div>
+      <h2>БОМБА</h2>
+      <p>Уничтожает блоки вокруг клетки.</p>
+      <button class="buy" data-item="bomb">🪙 100</button>
+    </div>
+
+    <div class="card">
+      <div>⚡</div>
+      <h2>ЛИНИЯ</h2>
+      <p>Очищает целый ряд.</p>
+      <button class="buy" data-item="line">🪙 150</button>
+    </div>
+
+    <div class="card">
+      <div>↩️</div>
+      <h2>ОТМЕНА</h2>
+      <p>Возвращает последний ход.</p>
+      <button class="buy" data-item="undo">🪙 200</button>
     </div>
 
   </div>
+</div>
 
 
-  <script src="script.js"></script>
+<div id="gameOver" class="screen hidden">
+
+  <div class="dead">💀</div>
+
+  <h1>ИГРА ОКОНЧЕНА</h1>
+
+  <div class="final">
+    <small>СЧЁТ</small>
+    <strong id="finalScore">0</strong>
+  </div>
+
+  <div class="earned">
+    🪙 +<span id="earnedCoins">0</span>
+  </div>
+
+  <button id="retryBtn">🔄 ЕЩЁ РАЗ</button>
+  <button id="overMenuBtn" class="dark">🏠 МЕНЮ</button>
+
+</div>
+
+
+<div id="pause" class="overlay hidden">
+
+  <div class="pauseBox">
+
+    <h1>⏸️ ПАУЗА</h1>
+
+    <button id="resumeBtn">▶ ПРОДОЛЖИТЬ</button>
+    <button id="pauseMenuBtn" class="dark">🏠 МЕНЮ</button>
+
+  </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
