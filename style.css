@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -18,6 +19,7 @@ body {
   background: #070b12;
   color: white;
   font-family: Arial, sans-serif;
+
   touch-action: none;
 }
 
@@ -28,12 +30,16 @@ button {
   cursor: pointer;
 }
 
+button:active {
+  transform: scale(.96);
+}
+
 .hidden {
   display: none !important;
 }
 
 
-/* MENU */
+/* ================= MENU ================= */
 
 .screen {
   position: fixed;
@@ -47,10 +53,12 @@ button {
   text-align: center;
 
   background:
-    radial-gradient(circle,
+    radial-gradient(
+      circle,
       #172b46,
       #080d16 65%,
-      #03050a);
+      #03050a
+    );
 }
 
 .logo {
@@ -76,7 +84,9 @@ button {
 
 .screen > p {
   margin: 25px 10px;
+
   color: #718096;
+
   font-size: 10px;
   letter-spacing: 2px;
 }
@@ -84,24 +94,23 @@ button {
 .screen > button,
 .pauseBox button {
   width: min(320px, 85vw);
+
   padding: 16px;
   margin: 5px;
 
   border-radius: 13px;
 
-  background: linear-gradient(
-    135deg,
-    #1992ff,
-    #005bc9
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #1992ff,
+      #005bc9
+    );
 
   font-size: 17px;
 
-  box-shadow: 0 7px 25px #006bd544;
-}
-
-button:active {
-  transform: scale(.96);
+  box-shadow:
+    0 7px 25px #006bd544;
 }
 
 button.dark {
@@ -112,12 +121,14 @@ button.dark {
 
 .stats {
   margin-top: 25px;
+
   color: #ffd12e;
+
   font-size: 20px;
 }
 
 
-/* GAME */
+/* ================= GAME ================= */
 
 #game {
   position: fixed;
@@ -142,7 +153,9 @@ header {
   justify-content: space-around;
 
   background: #0d141f;
-  border-bottom: 1px solid #202d40;
+
+  border-bottom:
+    1px solid #202d40;
 }
 
 header button {
@@ -152,17 +165,21 @@ header button {
   border-radius: 10px;
 
   background: #172333;
+
   font-size: 18px;
 }
 
 header div {
   text-align: center;
+
   font-size: 11px;
 }
 
 header small {
   display: block;
+
   color: #68788d;
+
   font-size: 8px;
 }
 
@@ -175,7 +192,7 @@ header strong {
 }
 
 
-/* COMBO */
+/* ================= COMBO ================= */
 
 #combo {
   height: 27px;
@@ -185,6 +202,7 @@ header strong {
   align-items: center;
 
   color: #ffd12e;
+
   font-size: 12px;
   font-weight: bold;
 
@@ -193,10 +211,13 @@ header strong {
 
 #combo.show {
   opacity: 1;
-  animation: combo .25s;
+
+  animation:
+    combo .25s;
 }
 
 @keyframes combo {
+
   from {
     transform: scale(.6);
   }
@@ -204,10 +225,11 @@ header strong {
   to {
     transform: scale(1);
   }
+
 }
 
 
-/* BOARD */
+/* ================= BOARD ================= */
 
 #board {
   width: min(94vw, 430px);
@@ -218,8 +240,12 @@ header strong {
   padding: 5px;
 
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+
+  grid-template-columns:
+    repeat(8, 1fr);
+
+  grid-template-rows:
+    repeat(8, 1fr);
 
   gap: 4px;
 
@@ -227,16 +253,21 @@ header strong {
 
   background: #101a27;
 
-  box-shadow: 0 15px 45px #0009;
+  box-shadow:
+    0 15px 45px #0009;
 }
 
 .cell {
+  min-width: 0;
+  min-height: 0;
+
   border-radius: 5px;
+
   background: #192433;
 
   transition:
-    transform .1s,
-    background .1s;
+    transform .08s,
+    background .08s;
 }
 
 .cell.filled {
@@ -244,20 +275,28 @@ header strong {
     inset 0 -4px #0003,
     0 2px 5px #0005;
 
-  animation: appear .13s;
+  animation:
+    appear .13s;
 }
 
 .cell.preview {
-  opacity: .5;
-  transform: scale(.88);
+  opacity: .65;
+
+  transform:
+    scale(.88);
 }
 
 .cell.invalid {
   background: #ef3856 !important;
-  opacity: .6;
+
+  opacity: .7;
+
+  transform:
+    scale(.9);
 }
 
 @keyframes appear {
+
   from {
     transform: scale(.4);
   }
@@ -265,10 +304,11 @@ header strong {
   to {
     transform: scale(1);
   }
+
 }
 
 
-/* HINT */
+/* ================= HINT ================= */
 
 .hint {
   height: 23px;
@@ -276,16 +316,18 @@ header strong {
   text-align: center;
 
   color: #66778c;
+
   font-size: 10px;
 }
 
 
-/* PIECES */
+/* ================= PIECES ================= */
 
 #pieces {
   height: 105px;
 
   display: flex;
+
   justify-content: space-around;
   align-items: center;
 
@@ -297,35 +339,42 @@ header strong {
   height: 90px;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
   border-radius: 13px;
 
   background: #0e1621;
-  border: 1px solid #223248;
+
+  border:
+    1px solid #223248;
 
   touch-action: none;
 }
 
 .piece.selected {
   border-color: #3da7ff;
-  box-shadow: 0 0 18px #168cff55;
+
+  box-shadow:
+    0 0 18px #168cff55;
 }
 
 .mini {
   display: grid;
+
   gap: 3px;
 }
 
 .miniBlock {
   width: 17px;
   height: 17px;
+
   border-radius: 4px;
 }
 
 
-/* DRAG */
+/* ================= DRAG ================= */
 
 .dragPiece {
   position: fixed;
@@ -336,10 +385,12 @@ header strong {
 
   transform:
     translate(-50%, -100%)
-    scale(1.15);
+    scale(1.12);
 
   filter:
-    drop-shadow(0 10px 12px #0008);
+    drop-shadow(
+      0 10px 12px #0008
+    );
 }
 
 .dragBlock {
@@ -352,12 +403,13 @@ header strong {
 }
 
 
-/* POWERS */
+/* ================= POWERS ================= */
 
 .powers {
   height: 67px;
 
   display: flex;
+
   justify-content: center;
 
   gap: 7px;
@@ -371,7 +423,9 @@ header strong {
   border-radius: 10px;
 
   background: #111b28;
-  border: 1px solid #26374c;
+
+  border:
+    1px solid #26374c;
 
   font-size: 20px;
 }
@@ -386,11 +440,12 @@ header strong {
 
 .powers b {
   color: #ffd12e;
+
   font-size: 10px;
 }
 
 
-/* SHOP */
+/* ================= SHOP ================= */
 
 .back {
   position: absolute;
@@ -411,7 +466,9 @@ header strong {
 
 .shopCoins {
   color: #ffd12e;
+
   font-size: 23px;
+
   margin-bottom: 20px;
 }
 
@@ -419,7 +476,9 @@ header strong {
   width: min(900px, 94vw);
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, 1fr);
 
   gap: 12px;
 }
@@ -430,7 +489,9 @@ header strong {
   border-radius: 15px;
 
   background: #111a27;
-  border: 1px solid #27374b;
+
+  border:
+    1px solid #27374b;
 }
 
 .card > div {
@@ -439,6 +500,7 @@ header strong {
 
 .card h2 {
   margin: 8px 0;
+
   font-size: 16px;
 }
 
@@ -446,6 +508,7 @@ header strong {
   min-height: 45px;
 
   color: #74849a;
+
   font-size: 11px;
 }
 
@@ -460,7 +523,7 @@ header strong {
 }
 
 
-/* GAME OVER */
+/* ================= GAME OVER ================= */
 
 .dead {
   font-size: 70px;
@@ -468,6 +531,7 @@ header strong {
 
 #gameOver h1 {
   margin: 15px;
+
   color: #ff496a;
 }
 
@@ -477,25 +541,30 @@ header strong {
 
 .final strong {
   display: block;
+
   font-size: 50px;
 }
 
 .earned {
   margin: 15px;
+
   color: #ffd12e;
+
   font-size: 20px;
 }
 
 
-/* PAUSE */
+/* ================= PAUSE ================= */
 
 .overlay {
   position: fixed;
+
   inset: 0;
 
   z-index: 500;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -512,16 +581,19 @@ header strong {
   text-align: center;
 
   background: #111a27;
-  border: 1px solid #293b52;
+
+  border:
+    1px solid #293b52;
 }
 
 
-/* PHONE */
+/* ================= PHONE ================= */
 
 @media (max-width: 600px) {
 
   #board {
     width: 94vw;
+
     gap: 3px;
   }
 
@@ -539,11 +611,14 @@ header strong {
     grid-template-columns: 1fr;
 
     max-height: 75vh;
+
     overflow-y: auto;
   }
 
   .card p {
     min-height: auto;
+
     margin-bottom: 10px;
   }
+
 }
