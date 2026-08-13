@@ -1,0 +1,705 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  background: #080b12;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+button {
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  border: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.screen {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #172238 0%,
+      #0b101b 45%,
+      #05070c 100%
+    );
+
+  text-align: center;
+}
+
+
+.logo {
+  font-size: 58px;
+  font-weight: 900;
+
+  line-height: .85;
+
+  letter-spacing: -3px;
+
+  color: #42a5ff;
+
+  text-shadow:
+    0 0 15px #1479df,
+    0 0 40px #064f9b;
+}
+
+.logo span {
+  color: #55d8ff;
+}
+
+.logo b {
+  color: #ff3d67;
+}
+
+.subtitle {
+  color: #68768c;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  margin: 25px 10px;
+}
+
+
+.bigBtn {
+  width: min(320px, 85vw);
+
+  padding: 16px;
+
+  margin: 6px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #188cff,
+      #0059c7
+    );
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 7px 20px #0065cf55;
+
+  transition: .15s;
+}
+
+.bigBtn:active {
+  transform: scale(.96);
+}
+
+
+.darkBtn {
+  background: #131a26;
+
+  border: 1px solid #263348;
+
+  color: #9aa9bf;
+
+  box-shadow: none;
+}
+
+
+.menuStats {
+  display: flex;
+
+  gap: 50px;
+
+  margin-top: 25px;
+
+  color: #ffc928;
+
+  font-size: 20px;
+}
+
+
+/* =========================
+   GAME
+========================= */
+
+#game {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background:
+    linear-gradient(
+      #0a0e17,
+      #06080d
+    );
+}
+
+
+.top {
+  height: 65px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-around;
+
+  flex-shrink: 0;
+
+  background: #0d131e;
+
+  border-bottom: 1px solid #202b3c;
+}
+
+
+#pauseBtn {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 10px;
+
+  background: #182131;
+
+  color: white;
+
+  font-size: 19px;
+}
+
+
+.stat {
+  color: #64748a;
+
+  font-size: 9px;
+
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+
+  color: white;
+
+  font-size: 17px;
+
+  margin-top: 2px;
+}
+
+
+#coins {
+  color: #ffd129;
+}
+
+
+/* =========================
+   COMBO
+========================= */
+
+#combo {
+  height: 25px;
+
+  text-align: center;
+
+  color: #ffca28;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  opacity: 0;
+}
+
+#combo.show {
+  opacity: 1;
+
+  animation: combo .3s;
+}
+
+@keyframes combo {
+
+  0% {
+    transform: scale(.7);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+
+/* =========================
+   BOARD
+========================= */
+
+main {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 5px;
+}
+
+
+#board {
+  width: min(94vw, 430px);
+
+  aspect-ratio: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(8, 1fr);
+
+  grid-template-rows:
+    repeat(8, 1fr);
+
+  gap: 4px;
+
+  padding: 5px;
+
+  border-radius: 14px;
+
+  background: #101925;
+
+  box-shadow:
+    0 15px 40px #0008;
+}
+
+
+.cell {
+  position: relative;
+
+  border-radius: 5px;
+
+  background: #182231;
+
+  transition:
+    transform .12s,
+    background .12s;
+}
+
+
+.cell.filled {
+  box-shadow:
+    inset 0 -4px 0 #0003,
+    0 2px 5px #0005;
+
+  animation:
+    appear .15s;
+}
+
+
+@keyframes appear {
+
+  from {
+    transform: scale(.4);
+  }
+
+  to {
+    transform: scale(1);
+  }
+
+}
+
+
+.cell.preview {
+  opacity: .55;
+
+  transform: scale(.88);
+}
+
+
+.cell.clearing {
+  animation:
+    clear .25s forwards;
+}
+
+
+@keyframes clear {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================
+   PIECES
+========================= */
+
+.piecesTitle {
+  text-align: center;
+
+  color: #59687d;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+  margin: 4px;
+}
+
+
+#pieces {
+  height: 105px;
+
+  display: flex;
+
+  justify-content: space-evenly;
+
+  align-items: center;
+
+  padding: 5px 10px;
+}
+
+
+.piece {
+  width: 90px;
+  height: 90px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #0e151f;
+
+  border: 1px solid #1d2a3b;
+
+  touch-action: none;
+
+  transition: .15s;
+}
+
+
+.piece.selected {
+  border-color: #43a5ff;
+
+  box-shadow:
+    0 0 15px #168cff55;
+
+  transform: translateY(-5px);
+}
+
+
+.miniPiece {
+  display: grid;
+
+  gap: 3px;
+}
+
+
+.miniBlock {
+  width: 17px;
+  height: 17px;
+
+  border-radius: 4px;
+}
+
+
+/* =========================
+   POWERS
+========================= */
+
+.powers {
+  height: 70px;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 6px;
+
+  margin-bottom: 3px;
+}
+
+
+.powers button {
+  min-width: 80px;
+
+  border-radius: 10px;
+
+  background: #121b28;
+
+  border: 1px solid #26374d;
+
+  color: white;
+
+  font-size: 20px;
+}
+
+
+.powers button span {
+  display: block;
+
+  font-size: 8px;
+
+  color: #72839a;
+}
+
+
+.powers button b {
+  color: #ffd029;
+
+  font-size: 10px;
+}
+
+
+/* =========================
+   SHOP
+========================= */
+
+.backBtn {
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+
+  padding: 10px 15px;
+
+  border-radius: 8px;
+
+  background: #141c29;
+
+  color: white;
+}
+
+
+#shop h1 {
+  margin-bottom: 15px;
+}
+
+
+.shopCoins {
+  color: #ffd129;
+
+  font-size: 23px;
+
+  margin-bottom: 25px;
+}
+
+
+.shopGrid {
+  width: min(900px, 94vw);
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+
+.shopCard {
+  padding: 18px;
+
+  border-radius: 15px;
+
+  background: #111a27;
+
+  border: 1px solid #26364c;
+}
+
+
+.shopIcon {
+  font-size: 45px;
+}
+
+
+.shopCard h2 {
+  margin: 10px 0;
+
+  font-size: 16px;
+}
+
+
+.shopCard p {
+  height: 50px;
+
+  color: #718096;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+.buyBtn {
+  width: 100%;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  background: #167fea;
+
+  color: white;
+
+  font-weight: bold;
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
+
+.gameOverIcon {
+  font-size: 75px;
+}
+
+#gameOver h1 {
+  margin: 15px;
+
+  color: #ff4769;
+}
+
+
+.finalScore span {
+  display: block;
+
+  color: #69788e;
+
+  font-size: 11px;
+}
+
+.finalScore strong {
+  display: block;
+
+  font-size: 45px;
+
+  color: white;
+}
+
+
+.earned {
+  color: #ffd129;
+
+  font-size: 20px;
+
+  margin: 15px;
+}
+
+
+/* =========================
+   PAUSE
+========================= */
+
+.overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #000b;
+}
+
+
+.pauseBox {
+  width: min(350px, 90vw);
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  background: #111925;
+
+  border: 1px solid #293a50;
+
+  text-align: center;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .logo {
+    font-size: 50px;
+  }
+
+  #board {
+    width: 94vw;
+
+    gap: 3px;
+
+    padding: 4px;
+  }
+
+  .piece {
+    width: 82px;
+    height: 82px;
+  }
+
+  .miniBlock {
+    width: 15px;
+    height: 15px;
+  }
+
+  .shopGrid {
+    grid-template-columns: 1fr;
+
+    max-height: 75vh;
+
+    overflow-y: auto;
+  }
+
+  .shopCard p {
+    height: auto;
+
+    margin-bottom: 10px;
+  }
+
+}
